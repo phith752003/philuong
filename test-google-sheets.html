@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Google Sheets Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #df4758;
+            text-align: center;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #df4758;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #c81d3c;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .log {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+        }
+        .log-success {
+            color: #28a745;
+        }
+        .log-error {
+            color: #dc3545;
+        }
+        .log-info {
+            color: #17a2b8;
+        }
+        .config-display {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        .status-checking {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Kết Nối Google Sheets</h1>
+        
+        <div class="test-section">
+            <h3>1. Thông tin Config</h3>
+            <div class="config-display" id="config-info">Đang load...</div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. Test Kết Nối</h3>
+            <button onclick="testConnection()">🔍 Test Connection</button>
+            <button onclick="testGetData()">📋 Test Get Data</button>
+            <button onclick="testSaveData()">💾 Test Save Data</button>
+            <button onclick="clearLog()">🗑️ Clear Log</button>
+            
+            <div class="status" id="status" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. Log</h3>
+            <div class="log" id="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Hướng dẫn Fix Lỗi CORS</h3>
+            <ol>
+                <li><strong>Vào Google Apps Script</strong></li>
+                <li><strong>Deploy → Manage deployments</strong></li>
+                <li>Kiểm tra: <strong>"Who has access" = "Anyone"</strong> (KHÔNG phải "Anyone with Google account")</li>
+                <li>Nếu sai: Archive deployment cũ → New deployment</li>
+                <li>Settings:
+                    <ul>
+                        <li>Execute as: <strong>Me</strong></li>
+                        <li>Who has access: <strong>Anyone</strong> ⚠️</li>
+                    </ul>
+                </li>
+                <li>Deploy → Authorize app</li>
+                <li>Copy URL mới → Update vào <code>config.js</code></li>
+                <li>Refresh trang này và test lại</li>
+            </ol>
+        </div>
+    </div>
+
+    <script src="assets/js/config.js"></script>
+    <script>
+        // Hiển thị config
+        function displayConfig() {
+            const configInfo = document.getElementById('config-info');
+            if (window.WEDDING_CONFIG && window.WEDDING_CONFIG.apiUrl) {
+                const url = window.WEDDING_CONFIG.apiUrl;
+                const isValid = !url.includes('PASTE_YOUR');
+                
+                configInfo.innerHTML = `
+                    <div><strong>URL:</strong> ${url}</div>
+                    <div><strong>Status:</strong> ${isValid ? '✅ Đã config' : '❌ Chưa config'}</div>
+                    <div><strong>Timeout:</strong> ${window.WEDDING_CONFIG.timeout}ms</div>
+                `;
+                
+                if (!isValid) {
+                    log('❌ Chưa config Google Apps Script URL!', 'error');
+                }
+            } else {
+                configInfo.innerHTML = '❌ Không tìm thấy config!';
+                log('❌ File config.js không load được!', 'error');
+            }
+        }
+
+        // Log function
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.className = `status status-${type}`;
+            status.textContent = message;
+            status.style.display = 'block';
+        }
+
+        // Test connection
+        async function testConnection() {
+            log('🔄 Đang test connection...', 'info');
+            showStatus('Đang kiểm tra kết nối...', 'checking');
+
+            if (!window.WEDDING_CONFIG || !window.WEDDING_CONFIG.apiUrl) {
+                log('❌ Không có config!', 'error');
+                showStatus('❌ Lỗi: Không có config', 'error');
+                return;
+            }
+
+            try {
+                const url = window.WEDDING_CONFIG.apiUrl + '?action=getData';
+                log(`📡 Sending request to: ${url}`, 'info');
+                
+                const response = await fetch(url);
+                log(`📥 Response status: ${response.status}`, 'info');
+                
+                const data = await response.json();
+                log(`✅ Response received!`, 'success');
+                log(`📊 Data: ${JSON.stringify(data, null, 2)}`, 'info');
+                
+                if (data.success) {
+                    showStatus('✅ Kết nối thành công!', 'success');
+                    log(`✅ SUCCESS! Guests: ${data.data?.guests?.length || 0}, Events: ${data.data?.events?.length || 0}`, 'success');
+                } else {
+                    showStatus('⚠️ Kết nối được nhưng có lỗi', 'error');
+                    log(`⚠️ Error message: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ ERROR: ${error.message}`, 'error');
+                showStatus('❌ Lỗi kết nối - Kiểm tra Deploy Settings!', 'error');
+                
+                // Log chi tiết lỗi CORS
+                if (error.message.includes('fetch')) {
+                    log('💡 Tip: Đây là lỗi CORS. Kiểm tra Deploy settings trong Google Apps Script!', 'error');
+                    log('💡 Đảm bảo "Who has access" = "Anyone" (KHÔNG phải "Anyone with Google account")', 'error');
+                }
+            }
+        }
+
+        // Test get data
+        async function testGetData() {
+            log('🔄 Test GET data...', 'info');
+            showStatus('Đang lấy dữ liệu...', 'checking');
+
+            try {
+                const url = window.WEDDING_CONFIG.apiUrl + '?action=getData';
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const guests = data.data?.guests || [];
+                    const events = data.data?.events || [];
+                    
+                    log(`✅ Lấy dữ liệu thành công!`, 'success');
+                    log(`📊 Số khách: ${guests.length}`, 'success');
+                    log(`📅 Số sự kiện: ${events.length}`, 'success');
+                    
+                    if (guests.length > 0) {
+                        log(`👤 Khách đầu tiên: ${JSON.stringify(guests[0], null, 2)}`, 'info');
+                    }
+                    if (events.length > 0) {
+                        log(`📅 Sự kiện đầu tiên: ${JSON.stringify(events[0], null, 2)}`, 'info');
+                    }
+                    
+                    showStatus(`✅ Thành công! ${guests.length} khách, ${events.length} sự kiện`, 'success');
+                } else {
+                    log(`❌ Lỗi: ${data.message}`, 'error');
+                    showStatus('❌ Lấy dữ liệu thất bại', 'error');
+                }
+            } catch (error) {
+                log(`❌ ERROR: ${error.message}`, 'error');
+                showStatus('❌ Lỗi kết nối', 'error');
+            }
+        }
+
+        // Test save data
+        async function testSaveData() {
+            log('🔄 Test SAVE data...', 'info');
+            showStatus('Đang lưu dữ liệu test...', 'checking');
+
+            try {
+                const testData = {
+                    guestId: 'test-001',
+                    guestName: 'Test User từ Website',
+                    attendance: 'yes',
+                    plusOne: 2,
+                    message: 'Test message - xác nhận tham dự',
+                    selectedEvents: 'event-le-an-hoi, event-tiec-nha-gai'
+                };
+                
+                log(`📤 Sending: ${JSON.stringify(testData, null, 2)}`, 'info');
+                
+                // Dùng GET request với query parameters thay vì POST
+                const params = new URLSearchParams({
+                    action: 'saveConfirmation',
+                    ...testData
+                });
+                
+                const url = window.WEDDING_CONFIG.apiUrl + '?' + params.toString();
+                log(`🔗 URL: ${url}`, 'info');
+                
+                const response = await fetch(url);
+                const result = await response.json();
+                
+                log(`📥 Response: ${JSON.stringify(result, null, 2)}`, 'info');
+                
+                if (result.success) {
+                    log(`✅ SAVE SUCCESS!`, 'success');
+                    log(`💡 Kiểm tra sheet "Confirmations" trong Google Sheets để xem dữ liệu`, 'info');
+                    showStatus('✅ Lưu thành công! Kiểm tra Google Sheets', 'success');
+                } else {
+                    log(`❌ Save failed: ${result.message}`, 'error');
+                    showStatus('❌ Lưu thất bại', 'error');
+                }
+                
+            } catch (error) {
+                log(`❌ ERROR: ${error.message}`, 'error');
+                showStatus('❌ Lưu dữ liệu thất bại', 'error');
+            }
+        }
+
+        // Init
+        window.addEventListener('DOMContentLoaded', () => {
+            displayConfig();
+            log('🚀 Test page loaded. Ready to test!', 'success');
+        });
+    </script>
+</body>
+</html>
+

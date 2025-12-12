@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp mời đám cưới - Phi & Lương</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Philosopher", "Playfair Display", "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #ffeef5 0%, #fff5f9 50%, #ffeef5 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .invitation-container {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            perspective: 1000px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope:hover {
+            transform: scale(1.02);
+        }
+
+        .envelope-body {
+            background: linear-gradient(135deg, #ffb3d1 0%, #ffcce0 50%, #ffb3d1 100%);
+            border-radius: 25px;
+            padding: 50px 35px;
+            box-shadow: 
+                0 25px 80px rgba(255, 182, 193, 0.5),
+                0 10px 30px rgba(255, 182, 193, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-3deg);
+            width: 120%;
+            height: 90px;
+            background: linear-gradient(135deg, #ffb3d1 0%, #ffcce0 50%, #ffb3d1 100%);
+            border-radius: 25px 25px 0 0;
+            box-shadow: 
+                0 -8px 25px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            z-index: 2;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .envelope-flap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-top: 30px solid #ffb3d1;
+        }
+
+        .envelope.open .envelope-flap {
+            transform: translateX(-50%) rotate(-180deg) translateY(-120px);
+            opacity: 0.3;
+        }
+
+        .heart {
+            position: absolute;
+            color: #c81d3c;
+            font-size: 22px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(200, 29, 60, 0.3));
+        }
+
+        .heart-1 {
+            top: 10px;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .heart-2 {
+            top: 15px;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .heart-3 {
+            top: 5px;
+            left: 5%;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(10deg);
+            }
+        }
+
+        .card {
+            background: linear-gradient(to bottom, #ffffff 0%, #fffafa 100%);
+            border-radius: 18px;
+            padding: 35px 30px;
+            margin-top: 25px;
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.12),
+                0 5px 15px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 1;
+            transform: translateY(0);
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+        }
+
+        .envelope.open .card {
+            transform: translateY(-20px);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .greeting {
+            font-size: 20px;
+            color: #4a4a4a;
+            margin-bottom: 10px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .guest-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #c81d3c;
+            margin-bottom: 18px;
+            font-family: "Playfair Display", "Philosopher", serif;
+            text-shadow: 0 2px 4px rgba(200, 29, 60, 0.1);
+            letter-spacing: 0.5px;
+        }
+
+        .open-hint {
+            font-size: 15px;
+            color: #888;
+            font-style: italic;
+            margin-top: 12px;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .couple-illustration {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 20px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .groom, .bride {
+            position: relative;
+            z-index: 3;
+            transition: transform 0.3s ease;
+        }
+
+        .groom:hover, .bride:hover {
+            transform: scale(1.1);
+        }
+
+        .groom {
+            width: 90px;
+            height: 110px;
+            background: linear-gradient(135deg, #ffb3d1 0%, #ffcce0 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .groom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('common/imgs/Phi luong fix/MRP00360.JPG') center center / cover;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        .bride {
+            width: 90px;
+            height: 110px;
+            background: linear-gradient(135deg, #ffb3d1 0%, #ffcce0 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .bride::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('common/imgs/Phi luong fix/MRP09862.JPG') center center / cover;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        .flowers {
+            position: absolute;
+            right: -30px;
+            bottom: -20px;
+            width: 120px;
+            height: 120px;
+            z-index: 2;
+        }
+
+        .rose {
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #ff69b4 0%, #ff1493 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            box-shadow: 
+                0 8px 20px rgba(255, 20, 147, 0.4),
+                0 3px 8px rgba(255, 20, 147, 0.2);
+            animation: float 4s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        .rose::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('common/imgs/Phi luong fix/MRP09730.JPG') center center / cover;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        .bud {
+            width: 25px;
+            height: 25px;
+            background: #ffb3d1;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 2px 8px rgba(255, 182, 193, 0.4);
+        }
+
+        .bud-1 {
+            top: 20px;
+            right: 10px;
+        }
+
+        .bud-2 {
+            bottom: 30px;
+            right: 5px;
+        }
+
+        .bud-3 {
+            bottom: 10px;
+            right: 25px;
+        }
+
+        .leaf {
+            width: 20px;
+            height: 30px;
+            background: #2d5016;
+            border-radius: 0 100% 0 100%;
+            position: absolute;
+        }
+
+        .leaf-1 {
+            bottom: 0;
+            right: 40px;
+            transform: rotate(-30deg);
+        }
+
+        .leaf-2 {
+            bottom: 10px;
+            right: 60px;
+            transform: rotate(45deg);
+        }
+
+        .invitation-content {
+            display: none;
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(to bottom, #ffffff 0%, #fffafa 100%);
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.15),
+                0 8px 20px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+        }
+
+        .wedding-photo {
+            width: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid #fff;
+            box-shadow: 0 8px 25px rgba(200, 29, 60, 0.25);
+        }
+
+        .wedding-photo img {
+            width: 110%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .envelope.open + .invitation-content {
+            display: block;
+            animation: fadeInUp 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .envelope:not(.open) .card {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .couple-names {
+            font-size: 42px;
+            font-weight: 700;
+            color: #c81d3c;
+            margin: 25px 0;
+            font-family: "Playfair Display", "Philosopher", serif;
+            text-shadow: 0 2px 8px rgba(200, 29, 60, 0.15);
+            letter-spacing: 1px;
+        }
+
+        .wedding-date {
+            font-size: 26px;
+            color: #4a4a4a;
+            margin: 20px 0;
+            font-weight: 600;
+            font-family: "Philosopher", sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .wedding-location {
+            font-size: 18px;
+            color: #666;
+            margin: 20px 0;
+            line-height: 1.8;
+            font-weight: 400;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .action-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c81d3c 0%, #e63950 100%);
+            color: white;
+            box-shadow: 
+                0 8px 20px rgba(200, 29, 60, 0.35),
+                0 3px 8px rgba(200, 29, 60, 0.2);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 12px 28px rgba(200, 29, 60, 0.45),
+                0 5px 12px rgba(200, 29, 60, 0.3);
+            background: linear-gradient(135deg, #a60f2e 0%, #c81d3c 100%);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #c81d3c;
+            border: 2px solid #c81d3c;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(200, 29, 60, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: #c81d3c;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(200, 29, 60, 0.3);
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            color: #c81d3c;
+            font-weight: 600;
+            font-family: "Playfair Display", "Philosopher", serif;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 4px rgba(200, 29, 60, 0.2);
+            font-style: italic;
+        }
+
+        .invitation-content .wedding-location > div {
+            margin: 12px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(200, 29, 60, 0.1);
+        }
+
+        .invitation-content .wedding-location > div:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 600px) {
+            .envelope-body {
+                padding: 35px 25px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .couple-names {
+                font-size: 32px;
+            }
+
+            .wedding-date {
+                font-size: 22px;
+            }
+
+            .wedding-location {
+                font-size: 16px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .groom, .bride {
+                width: 70px;
+                height: 90px;
+            }
+
+            .groom::before, .bride::before {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body">
+                <div class="heart heart-1">❤️</div>
+                <div class="heart heart-2">❤️</div>
+                <div class="heart heart-3">❤️</div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="greeting">Kính gửi:</div>
+                        <div class="guest-name" id="guest-name">Bạn Trung An</div>
+                        <div class="open-hint">ấn vào để mở</div>
+                    </div>
+                </div>
+
+                <div class="couple-illustration">
+                    <div class="groom"></div>
+                    <div class="bride"></div>
+                    <div class="flowers">
+                        <div class="rose"></div>
+                        <div class="bud bud-1"></div>
+                        <div class="bud bud-2"></div>
+                        <div class="bud bud-3"></div>
+                        <div class="leaf leaf-1"></div>
+                        <div class="leaf leaf-2"></div>
+                    </div>
+                </div>
+
+                <div class="logo-section">
+                    <div class="logo-text">Our Wedding</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="invitation-content" id="invitation-content">
+            <div class="wedding-photo">
+                <img src="common/imgs/Phi luong fix/MRP09730.JPG" alt="Phi & Lương">
+            </div>
+            <div class="couple-names">Hoàng Phi & Thị Lương</div>
+            <div class="wedding-date">20 - 21 Tháng 12, 2025</div>
+            <div class="wedding-location">
+                <div>Lễ Ăn Hỏi & Tiệc Nhà Gái: 20/12/2025</div>
+                <div>Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình</div>
+                <div style="margin-top: 15px;">Lễ Thành Hôn & Tiệc Nhà Trai: 21/12/2025</div>
+                <div>Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình</div>
+            </div>
+            <div class="action-buttons">
+                <a href="rsvp.html" class="btn btn-primary">Xác nhận tham dự</a>
+                <a href="index.html" class="btn btn-secondary">Xem thông tin cưới</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Đọc thông tin từ URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get('guestName') || 'Khách mời';
+        const guestNote = urlParams.get('guestNote') || '';
+        const eventIds = urlParams.get('eventIds') ? urlParams.get('eventIds').split(',') : [];
+
+        // Cập nhật tên khách mời
+        const guestNameElement = document.getElementById('guest-name');
+        if (guestNameElement) {
+            guestNameElement.textContent = guestName.startsWith('Bạn ') ? guestName : `Bạn ${guestName}`;
+        }
+
+        // Cập nhật title
+        document.title = `Kính gửi ${guestName} ! - Thiệp mời đám cưới online`;
+
+        // Xử lý mở thiệp
+        const envelope = document.getElementById('envelope');
+        const invitationContent = document.getElementById('invitation-content');
+        let isOpen = false;
+
+        envelope.addEventListener('click', function() {
+            if (!isOpen) {
+                envelope.classList.add('open');
+                isOpen = true;
+                
+                // Hiển thị nội dung sau khi mở
+                setTimeout(() => {
+                    invitationContent.style.display = 'block';
+                }, 300);
+            }
+        });
+
+        // Cập nhật thông tin sự kiện nếu có
+        const EVENTS_MAP = {
+            'event-le-an-hoi': {
+                name: 'LỄ ĂN HỎI',
+                date: '20/12/2025',
+                location: 'Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình'
+            },
+            'event-tiec-nha-gai': {
+                name: 'TIỆC ĐÃI KHÁCH NHÀ GÁI',
+                date: '20/12/2025',
+                location: 'Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình'
+            },
+            'event-le-thanh-hon': {
+                name: 'LỄ THÀNH HÔN',
+                date: '21/12/2025',
+                location: 'Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình'
+            },
+            'event-tiec-nha-trai': {
+                name: 'TIỆC CƯỚI NHÀ TRAI',
+                date: '21/12/2025',
+                location: 'Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình'
+            }
+        };
+
+        // Nếu có eventIds, có thể tùy chỉnh thông tin hiển thị
+        if (eventIds.length > 0) {
+            // Có thể tùy chỉnh thông tin sự kiện dựa trên eventIds
+            console.log('Events for guest:', eventIds);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{
+  "events": [
+    {
+      "id": "event-le-an-hoi",
+      "name": "LỄ ĂN HỎI",
+      "date": "20/12/2025",
+      "time": "Thời gian sẽ được thông báo sau",
+      "location": "Tại tư gia nhà gái - Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình"
+    },
+    {
+      "id": "event-tiec-nha-gai",
+      "name": "TIỆC ĐÃI KHÁCH NHÀ GÁI",
+      "date": "20/12/2025",
+      "time": "Thời gian sẽ được thông báo sau",
+      "location": "Tại tư gia nhà gái - Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình"
+    },
+    {
+      "id": "event-le-thanh-hon",
+      "name": "LỄ THÀNH HÔN",
+      "date": "21/12/2025",
+      "time": "Thời gian sẽ được thông báo sau",
+      "location": "Tại tư gia nhà trai - Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình"
+    },
+    {
+      "id": "event-tiec-nha-trai",
+      "name": "TIỆC CƯỚI NHÀ TRAI",
+      "date": "21/12/2025",
+      "time": "Thời gian sẽ được thông báo sau",
+      "location": "Tại tư gia nhà trai - Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình"
+    }
+  ],
+  "guests": [
+    {
+      "id": "guest-thu-thao",
+      "name": "Bạn Thu Thảo",
+      "code": "1B23",
+      "phone": "0988111222",
+      "email": "thu.thao@example.com",
+      "note": "Đồng nghiệp cô dâu",
+      "eventIds": ["event-le-an-hoi", "event-tiec-nha-gai"]
+    },
+    {
+      "id": "guest-gia-dinh-hai-long",
+      "name": "Gia đình Hải Long",
+      "code": "F902",
+      "phone": "0907666555",
+      "email": "hailong.family@example.com",
+      "note": "Họ hàng nhà trai",
+      "eventIds": ["event-le-thanh-hon", "event-tiec-nha-trai"]
+    },
+    {
+      "id": "guest-ngoc-linh",
+      "name": "Bạn Ngọc Linh",
+      "code": "1L88",
+      "phone": "0977555444",
+      "email": "ngoc.linh@example.com",
+      "note": "Bạn đại học cô dâu",
+      "eventIds": ["event-le-an-hoi", "event-tiec-nha-gai", "event-le-thanh-hon"]
+    }
+  ]
+}
+

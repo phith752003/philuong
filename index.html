@@ -16,11 +16,70 @@
 	    <meta property="og:image:secure_url" content="common/imgs/Phi luong fix/MRP09730.JPG">
 	    <meta name="format-detection" content="telephone=no">
         <meta name="application-name" content="Wedding Website">
-        <link rel="shortcut icon" type="image/x-icon" href="../iwedding.info/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="templates/template7/css/libs.css?v=20251121" rel="stylesheet">
         <link href="common/calendar.css?v=20251121" rel="stylesheet">
         <link href="common/toastr/toastr.min.css?v=20251121" rel="stylesheet">
         <link href="templates/template7/css/style.css?v=20251121" rel="stylesheet">
+        <style>
+            /* Style cho icon với background màu cam nhạt */
+            .theme-btn .fa-envelope,
+            .tooltipBtn .fa-envelope {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                background-color: #dfcbda;
+                color: white;
+                border-radius: 4px;
+                margin-right: 8px;
+                font-size: 14px;
+            }
+            
+            .theme-btn .fa-check-circle,
+            .tooltipBtn .fa-check-circle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                background-color: #FFB84D;
+                color: white;
+                border-radius: 50%;
+                margin-right: 8px;
+                font-size: 14px;
+            }
+            
+            /* Icon trong floating menu */
+            .list-menu-icon .fa-envelope,
+            .list-menu-icon .fa-check-circle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                background-color: #FFB84D;
+                color: white;
+                border-radius: 4px;
+            }
+            
+            .list-menu-icon .fa-check-circle {
+                border-radius: 50%;
+            }
+            
+            /* Tách riêng 2 button */
+            .website_info_container > div {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            .website_info_container .theme-btn {
+                margin: 0 !important;
+                display: inline-block;
+            }
+        </style>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-K9L0ZFE1PJ"></script>
 		<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-K9L0ZFE1PJ');</script>
     </head>
@@ -89,7 +148,7 @@
                 <div class="row">
                     <div class="well col-md-10 col-md-offset-1 text-center">
                         <div class="section-heading">
-                            <h2>20 Tháng 12 2025</h2>
+                            <h2>21 Tháng 12 2025</h2>
                             <div class="hr"></div>
                         </div>
                         <h4>Save the Date</h4>
@@ -97,7 +156,7 @@
                             Một lời chúc của bạn chắc chắn sẽ làm cho đám cưới của chúng tôi có thêm một niềm hạnh phúc!
                         </p>
                         <div class="clock-grids">
-                            <div id="clock" data-date="2025-12-20" data-text-day="Ngày" data-text-hour="Giờ" data-text-minute="Phút" data-text-second="Giây"></div>
+                            <div id="clock" data-date="2025-12-21" data-text-day="Ngày" data-text-hour="Giờ" data-text-minute="Phút" data-text-second="Giây"></div>
                         </div>
                         <div class="page-scroll margin1">
                         </div>
@@ -147,18 +206,22 @@
         	<div class="container">
         		<div class="row button-accessibilities animate-box" data-animate-effect="fadeInUp">
                 	<div class="col col-12">
-                		<div class="website_info_container text-center">
-                			                			<a href="#rsvp" class="theme-btn album">
-								<span class="content-button">
-									💌 Gửi lời chúc
-                				</span>
-                			</a>
-                			                			                			<a href="rsvp.html" class="theme-btn album">
-	                			<span class="content-button">
-		                			✉️ Xác nhận tham dự
-		                		</span>
-	                		</a>
-	                			                		                		</div>
+                		<div class="website_info_container text-center" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                			<div style="margin: 0; padding: 0;">
+                				<a href="#rsvp" class="theme-btn album" style="margin: 0;">
+                					<span class="content-button">
+                						<i class="fas fa-envelope"></i> Gửi lời chúc <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                					</span>
+                				</a>
+                			</div>
+                			<div style="margin: 0; padding: 0;">
+                				<a href="rsvp.html" class="theme-btn album" style="margin: 0;">
+                					<span class="content-button">
+                						<i class="fas fa-check-circle"></i> Xác nhận tham dự <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                					</span>
+                				</a>
+                			</div>
+                		</div>
                 	</div>
                 </div>
         	</div>
@@ -181,7 +244,7 @@
                                         </div>
 		                                <div class="well">
 		                                    <h3 class="title">LỄ ĂN HỎI</h3>
-		                                    <h6><span class="time">8 giờ sáng - 11 giờ trưa</span> <span class="date">20/12/2025</span></h6>
+		                                    <h6><span class="time">1 giờ 30 chiều</span> <span class="date">20/12/2025</span></h6>
 		                                    <p class="location">
                                                                                                     <span>Tại tư gia nhà gái - </span>
                                                                                                 Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình
@@ -215,7 +278,7 @@
                                         </div>
 		                                <div class="well">
 		                                    <h3 class="title">TIỆC ĐÃI KHÁCH NHÀ GÁI</h3>
-		                                    <h6><span class="time">Thời gian sẽ được thông báo sau</span> <span class="date">20/12/2025</span></h6>
+		                                    <h6><span class="time">8 - 12 giờ sáng</span> <span class="date">20/12/2025</span></h6>
 		                                    <p class="location">
                                                                                                     <span>Tại tư gia nhà gái - </span>
                                                                                                 Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình
@@ -249,7 +312,7 @@
                                         </div>
 		                                <div class="well">
 		                                    <h3 class="title">LỄ THÀNH HÔN</h3>
-		                                    <h6><span class="time">Thời gian sẽ được thông báo sau</span> <span class="date">21/12/2025</span></h6>
+		                                    <h6><span class="time">12 giờ 05 trưa</span> <span class="date">21/12/2025</span></h6>
 		                                    <p class="location">
                                                                                                     <span>Tại tư gia nhà trai - </span>
                                                                                                 Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình
@@ -283,7 +346,7 @@
                                         </div>
 		                                <div class="well">
 		                                    <h3 class="title">TIỆC CƯỚI NHÀ TRAI</h3>
-		                                    <h6><span class="time">Thời gian sẽ được thông báo sau</span> <span class="date">21/12/2025</span></h6>
+		                                    <h6><span class="time">8 - 10 giờ sáng</span> <span class="date">21/12/2025</span></h6>
 		                                    <p class="location">
                                                                                                     <span>Tại tư gia nhà trai - </span>
                                                                                                 Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình
@@ -608,7 +671,7 @@
                 <a href="#rsvp" class="text-white">
                     <span class="content-button tooltipBtn">
                         <span class="tooltiptext">Gửi lời chúc</span>
-                        <span style="font-size: 22px; line-height: 1;">💌</span>
+                        <i class="fas fa-envelope" style="font-size: 22px; line-height: 1;"></i>
                     </span>
                 </a>
             </li>
@@ -617,7 +680,7 @@
                 <a href="rsvp.html" class="text-white">
                     <span class="content-button tooltipBtn">
                         <span class="tooltiptext">Xác nhận tham dự</span>
-                        <span style="font-size: 22px; line-height: 1;">✉️</span>
+                        <i class="fas fa-check-circle" style="font-size: 22px; line-height: 1;"></i>
                     </span>
                 </a>
             </li>
@@ -625,30 +688,6 @@
                     </ul>
     </div>
     
-    <script type="text/javascript">
-        function sanitizeJsonString(jsonString) {
-            return jsonString
-                .replace(/[\n\r\t]/g, '')
-                .replace(/[\u0000-\u001F]+/g, '')
-                .replace(/,(\s*[}\]])/g, '$1');
-        }
-        function parseJsonRecursively(jsonString) {
-            let sanitizedString = sanitizeJsonString(jsonString);
-            let parsed = JSON.parse(sanitizedString);
-            Object.keys(parsed).forEach(function(key) {
-                try {
-                	let checkValue = JSON.parse(parsed[key]);
-                	if (checkValue && checkValue.constructor === Object) {
-		                parsed[key] = checkValue;
-		            }
-                } catch (e) {
-
-                }
-            });
-            return parsed;
-        }
-    	let biicore = parseJsonRecursively('{"template_id":"6174ee94ff1ef271cb2d8bc5","templatePremium":false,"themeRoot":"templates\/template7","webroot":".","coreSite":"","webToken":"","isPremium":true,"bgMusic":"","alert":"[]","effect":"{\\\u0022type\\\u0022:\\\u0022heart\\\u0022}","logo":"","url_landing_page":"","isAutoPlay":true,"footer_title":"","footer_title_mobile":"","enable_editor":false,"dataGroupAttr":[]}');
-    </script>
 	<script src="templates/template7/js/jquery-plugin-collection.js?v=20251121"></script>
 	<script src="common/calendar.js?v=20251121"></script>
 	<script src="templates/template7/js/script.js?v=20251121"></script>

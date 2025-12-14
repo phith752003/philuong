@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Load config trước -->
+    <script src="assets/js/config.js?v=20251212"></script>
     <style>
         * {
             margin: 0;
@@ -97,10 +100,28 @@
 
         .heart {
             position: absolute;
-            color: #c81d3c;
-            font-size: 22px;
+            width: 20px;
+            height: 18px;
             animation: float 3s ease-in-out infinite;
             filter: drop-shadow(0 2px 4px rgba(200, 29, 60, 0.3));
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 16px;
+            background: #c81d3c;
+            border-radius: 10px 10px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart::after {
+            left: 10px;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
         }
 
         .heart-1 {
@@ -494,6 +515,164 @@
             border-bottom: none;
         }
 
+        /* RSVP Form Styles */
+        .rsvp-form-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(200, 29, 60, 0.2);
+        }
+
+        .rsvp-form-section h3 {
+            font-size: 24px;
+            color: #c81d3c;
+            margin-bottom: 20px;
+            font-family: "Playfair Display", "Philosopher", serif;
+            text-align: center;
+        }
+
+        .event-checklist {
+            margin: 20px 0;
+        }
+
+        .event-card {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            margin-bottom: 12px;
+            background: white;
+            border: 2px solid rgba(200, 29, 60, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            border-color: #c81d3c;
+            box-shadow: 0 4px 12px rgba(200, 29, 60, 0.15);
+        }
+
+        .event-card input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #c81d3c;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-details strong {
+            display: block;
+            color: #c81d3c;
+            font-size: 16px;
+            margin-bottom: 5px;
+            font-family: "Playfair Display", "Philosopher", serif;
+        }
+
+        .event-details span {
+            display: block;
+            color: #666;
+            font-size: 14px;
+            margin: 3px 0;
+        }
+
+        .confirmation-form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a4a4a;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(200, 29, 60, 0.2);
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: "Philosopher", sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #c81d3c;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .status-message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .status-message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #c81d3c 0%, #e63950 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(200, 29, 60, 0.4);
+            background: linear-gradient(135deg, #a60f2e 0%, #c81d3c 100%);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         @media (max-width: 600px) {
             .envelope-body {
                 padding: 35px 25px;
@@ -531,6 +710,10 @@
             .groom::before, .bride::before {
                 font-size: 40px;
             }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -539,9 +722,9 @@
         <div class="envelope" id="envelope">
             <div class="envelope-flap"></div>
             <div class="envelope-body">
-                <div class="heart heart-1">❤️</div>
-                <div class="heart heart-2">❤️</div>
-                <div class="heart heart-3">❤️</div>
+                <div class="heart heart-1"></div>
+                <div class="heart heart-2"></div>
+                <div class="heart heart-3"></div>
                 
                 <div class="card">
                     <div class="card-header">
@@ -582,8 +765,40 @@
                 <div style="margin-top: 15px;">Lễ Thành Hôn & Tiệc Nhà Trai: 21/12/2025</div>
                 <div>Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình</div>
             </div>
-            <div class="action-buttons">
-                <a href="rsvp.html" class="btn btn-primary">Xác nhận tham dự</a>
+            <div class="rsvp-form-section" id="rsvp-form-section">
+                <h3>Xác nhận tham dự</h3>
+                <div class="event-checklist" id="guest-events"></div>
+                <form id="confirmation-form" class="confirmation-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="attendance-status">Trạng thái tham dự</label>
+                            <select id="attendance-status" required>
+                                <option value="">Bạn sẽ tham gia chứ?</option>
+                                <option value="yes">Tôi sẽ tham dự</option>
+                                <option value="maybe">Chưa xác định trước được</option>
+                                <option value="no">Tôi không tham gia được</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="plus-one">Bạn có người đi cùng không?</label>
+                            <select id="plus-one">
+                                <option value="0">Đi một mình</option>
+                                <option value="1">Đi cùng 1 người</option>
+                                <option value="2">Đi cùng 2 người</option>
+                                <option value="3">Đi cùng 3 người</option>
+                                <option value="4">Đi cùng 4 người</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="guest-message">Lời nhắn dành cho cô dâu & chú rể</label>
+                        <textarea id="guest-message" rows="3" placeholder="Chia sẻ điều bạn muốn nhắn nhủ..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Gửi xác nhận</button>
+                </form>
+                <div class="status-message" id="status-message"></div>
+            </div>
+            <div class="action-buttons" style="margin-top: 20px;">
                 <a href="index.html" class="btn btn-secondary">Xem thông tin cưới</a>
             </div>
         </div>
@@ -592,14 +807,31 @@
     <script>
         // Đọc thông tin từ URL parameters
         const urlParams = new URLSearchParams(window.location.search);
+        const guestId = urlParams.get('guestId') || '';
         const guestName = urlParams.get('guestName') || 'Khách mời';
         const guestNote = urlParams.get('guestNote') || '';
-        const eventIds = urlParams.get('eventIds') ? urlParams.get('eventIds').split(',') : [];
+        const eventIds = urlParams.get('eventIds') ? urlParams.get('eventIds').split(',').map(id => id.trim()) : [];
+
+        // State
+        const state = {
+            events: {},
+            isLoading: false
+        };
+
+        // Elements
+        const elements = {
+            guestName: document.getElementById('guest-name'),
+            eventList: document.getElementById('guest-events'),
+            confirmationForm: document.getElementById('confirmation-form'),
+            attendanceSelect: document.getElementById('attendance-status'),
+            plusOneSelect: document.getElementById('plus-one'),
+            messageInput: document.getElementById('guest-message'),
+            statusMessage: document.getElementById('status-message')
+        };
 
         // Cập nhật tên khách mời
-        const guestNameElement = document.getElementById('guest-name');
-        if (guestNameElement) {
-            guestNameElement.textContent = guestName.startsWith('Bạn ') ? guestName : `Bạn ${guestName}`;
+        if (elements.guestName) {
+            elements.guestName.textContent = guestName.startsWith('Bạn ') ? guestName : `Bạn ${guestName}`;
         }
 
         // Cập nhật title
@@ -618,38 +850,267 @@
                 // Hiển thị nội dung sau khi mở
                 setTimeout(() => {
                     invitationContent.style.display = 'block';
+                    // Load events sau khi mở thiệp
+                    loadEvents();
                 }, 300);
             }
         });
 
-        // Cập nhật thông tin sự kiện nếu có
-        const EVENTS_MAP = {
-            'event-le-an-hoi': {
-                name: 'LỄ ĂN HỎI',
-                date: '20/12/2025',
-                location: 'Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình'
-            },
-            'event-tiec-nha-gai': {
-                name: 'TIỆC ĐÃI KHÁCH NHÀ GÁI',
-                date: '20/12/2025',
-                location: 'Thôn 3 Mai Xá, Xã Vĩnh Trụ, Tỉnh Ninh Bình'
-            },
-            'event-le-thanh-hon': {
-                name: 'LỄ THÀNH HÔN',
-                date: '21/12/2025',
-                location: 'Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình'
-            },
-            'event-tiec-nha-trai': {
-                name: 'TIỆC CƯỚI NHÀ TRAI',
-                date: '21/12/2025',
-                location: 'Số 01 ngõ 62 Đường Trần Thánh Tông, Thôn Vĩnh Thịnh, Xã Vĩnh Trụ, Tỉnh Ninh Bình'
+        // Load events từ Google Sheets
+        function loadEvents() {
+            if (state.isLoading) return;
+            
+            if (!window.WEDDING_CONFIG || !window.WEDDING_CONFIG.apiUrl) {
+                elements.eventList.innerHTML = '<p style="text-align: center; color: #666;">Chưa cấu hình API. Vui lòng liên hệ Phi & Lương.</p>';
+                return;
             }
-        };
 
-        // Nếu có eventIds, có thể tùy chỉnh thông tin hiển thị
-        if (eventIds.length > 0) {
-            // Có thể tùy chỉnh thông tin sự kiện dựa trên eventIds
-            console.log('Events for guest:', eventIds);
+            state.isLoading = true;
+            const apiUrl = window.WEDDING_CONFIG.apiUrl + '?action=getEvents';
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success && result.data && result.data.events) {
+                        // Convert array to object
+                        result.data.events.forEach(event => {
+                            state.events[event.id] = event;
+                        });
+                        renderEvents();
+                    } else {
+                        throw new Error(result.message || 'Failed to load events');
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tải events:', error);
+                    elements.eventList.innerHTML = '<p style="text-align: center; color: #666;">Không thể tải thông tin sự kiện. Vui lòng thử lại sau hoặc liên hệ Phi & Lương.</p>';
+                })
+                .finally(() => {
+                    state.isLoading = false;
+                });
+        }
+
+        // Format date từ ISO string hoặc string thường
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            
+            // Nếu là ISO string (2025-12-20T17:00:00.000Z hoặc 2025-12-21T00:00:00.000Z)
+            if (dateStr.includes('T') || dateStr.includes('Z')) {
+                try {
+                    // Parse trực tiếp từ ISO string để tránh timezone issues
+                    // Format: YYYY-MM-DDTHH:mm:ss.sssZ
+                    const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})T/);
+                    if (match) {
+                        const year = match[1];
+                        const month = match[2];
+                        const day = match[3];
+                        return `${day}/${month}/${year}`;
+                    }
+                    
+                    // Fallback: dùng Date object với local timezone
+                    const date = new Date(dateStr);
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const year = date.getFullYear();
+                    return `${day}/${month}/${year}`;
+                } catch (e) {
+                    return dateStr;
+                }
+            }
+            
+            // Nếu đã là format dd/mm/yyyy thì giữ nguyên
+            return dateStr;
+        }
+
+        // Format time từ ISO string hoặc string thường
+        function formatTime(timeStr, dateStr) {
+            // Nếu timeStr có giá trị và không phải là "Thời gian sẽ được thông báo sau"
+            if (timeStr && typeof timeStr === 'string') {
+                const lowerTime = timeStr.toLowerCase();
+                if (lowerTime.includes('thông báo sau') || 
+                    lowerTime.includes('sẽ được thông báo') ||
+                    lowerTime.includes('sẽ thông báo')) {
+                    return null;
+                }
+                
+                // Nếu là ISO string, extract time
+                if (timeStr.includes('T')) {
+                    try {
+                        const date = new Date(timeStr);
+                        const hours = String(date.getUTCHours()).padStart(2, '0');
+                        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+                        return `${hours}:${minutes}`;
+                    } catch (e) {
+                        return timeStr;
+                    }
+                }
+                
+                // Nếu đã là format HH:mm thì giữ nguyên
+                if (timeStr.match(/^\d{1,2}:\d{2}$/)) {
+                    return timeStr;
+                }
+            }
+            
+            // Nếu không có timeStr nhưng dateStr là ISO string, extract time từ date
+            if (dateStr && (dateStr.includes('T') || dateStr.includes('Z'))) {
+                try {
+                    const date = new Date(dateStr);
+                    const hours = String(date.getUTCHours()).padStart(2, '0');
+                    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+                    // Chỉ hiển thị nếu có time (không phải 00:00)
+                    if (hours !== '00' || minutes !== '00') {
+                        return `${hours}:${minutes}`;
+                    }
+                } catch (e) {
+                    // Ignore
+                }
+            }
+            
+            return null;
+        }
+
+        // Render events vào form
+        function renderEvents() {
+            if (!elements.eventList) return;
+
+            if (eventIds.length === 0) {
+                elements.eventList.innerHTML = '<p style="text-align: center; color: #666;">Khách mời chưa được gán sự kiện cụ thể.</p>';
+                return;
+            }
+
+            const eventCards = eventIds
+                .map(id => {
+                    const event = state.events[id];
+                    if (!event) return '';
+
+                    const formattedDate = formatDate(event.date);
+                    const formattedTime = formatTime(event.time, event.date);
+
+                    return `
+                        <label class="event-card">
+                            <input type="checkbox" name="eventSelections" value="${event.id}" checked>
+                            <div class="event-details">
+                                <strong>${event.name}</strong>
+                                ${formattedTime ? `<span>${formattedTime}</span>` : ''}
+                                <span>${formattedDate}</span>
+                                <span>${event.location}</span>
+                            </div>
+                        </label>
+                    `;
+                })
+                .filter(Boolean)
+                .join('');
+
+            elements.eventList.innerHTML = eventCards || '<p style="text-align: center; color: #666;">Không có sự kiện nào.</p>';
+        }
+
+        // Xử lý submit form
+        function handleConfirmation(event) {
+            event.preventDefault();
+
+            if (!guestId) {
+                showStatus('Vui lòng truy cập từ link thiệp mời hợp lệ.', 'error');
+                return;
+            }
+
+            const attendance = elements.attendanceSelect.value;
+            const plusOne = elements.plusOneSelect.value;
+            const message = elements.messageInput.value.trim();
+            const selectedEvents = Array.from(
+                elements.eventList.querySelectorAll('input[name="eventSelections"]:checked')
+            ).map(input => input.value);
+
+            if (!attendance) {
+                showStatus('Vui lòng chọn trạng thái tham dự.', 'error');
+                return;
+            }
+
+            if (!selectedEvents.length) {
+                showStatus('Vui lòng chọn ít nhất một sự kiện tham dự.', 'error');
+                return;
+            }
+
+            // Gửi lên Google Sheets
+            saveToGoogleSheets({
+                guestId: guestId,
+                guestName: guestName,
+                attendance: attendance,
+                plusOne: parseInt(plusOne) || 0,
+                message: message,
+                selectedEvents: selectedEvents
+            });
+        }
+
+        // Gửi xác nhận lên Google Sheets
+        function saveToGoogleSheets(confirmationData) {
+            const submitButton = elements.confirmationForm.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            
+            submitButton.textContent = 'Đang gửi...';
+            submitButton.disabled = true;
+            hideStatus();
+
+            // Dùng GET request thay vì POST để tránh CORS
+            const params = new URLSearchParams({
+                action: 'saveConfirmation',
+                guestId: confirmationData.guestId || '',
+                guestName: confirmationData.guestName || '',
+                attendance: confirmationData.attendance || '',
+                plusOne: confirmationData.plusOne || 0,
+                message: confirmationData.message || '',
+                selectedEvents: confirmationData.selectedEvents ? confirmationData.selectedEvents.join(', ') : ''
+            });
+            
+            const apiUrl = window.WEDDING_CONFIG && window.WEDDING_CONFIG.apiUrl 
+                ? window.WEDDING_CONFIG.apiUrl + '?' + params.toString()
+                : null;
+
+            if (!apiUrl) {
+                showStatus('Chưa cấu hình API. Vui lòng liên hệ Phi & Lương.', 'error');
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+                return;
+            }
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        showStatus('Đã lưu xác nhận tham dự! Cảm ơn bạn. Hẹn gặp trong ngày vui của Phi & Lương!', 'success');
+                        elements.confirmationForm.reset();
+                        // Reset checkboxes
+                        elements.eventList.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true);
+                    } else {
+                        throw new Error(result.message || 'Failed to save');
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi lưu:', error);
+                    showStatus('Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Phi & Lương.', 'error');
+                })
+                .finally(() => {
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                });
+        }
+
+        // Hiển thị status message
+        function showStatus(message, type) {
+            if (!elements.statusMessage) return;
+            elements.statusMessage.textContent = message;
+            elements.statusMessage.className = `status-message ${type}`;
+            elements.statusMessage.style.display = 'block';
+        }
+
+        // Ẩn status message
+        function hideStatus() {
+            if (!elements.statusMessage) return;
+            elements.statusMessage.style.display = 'none';
+        }
+
+        // Bind form submit
+        if (elements.confirmationForm) {
+            elements.confirmationForm.addEventListener('submit', handleConfirmation);
         }
     </script>
 </body>

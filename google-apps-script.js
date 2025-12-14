@@ -99,6 +99,7 @@ function getEvents() {
   }
   
   const data = sheet.getDataRange().getValues();
+  const displayData = sheet.getDataRange().getDisplayValues(); // Lấy giá trị hiển thị
   const headers = data[0];
   const events = [];
   
@@ -107,7 +108,32 @@ function getEvents() {
     
     const event = {};
     headers.forEach((header, index) => {
-      event[header] = data[i][index];
+      let value = data[i][index];
+      
+      // Với date, dùng display value để lấy đúng format hiển thị trong sheet
+      if (header === 'date') {
+        const displayValue = displayData[i][index];
+        // Nếu display value là format dd/mm/yyyy thì dùng luôn
+        if (displayValue && typeof displayValue === 'string' && displayValue.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/)) {
+          value = displayValue;
+        } else if (value instanceof Date) {
+          // Format date thành dd/mm/yyyy - dùng timezone Asia/Ho_Chi_Minh
+          const timezone = Session.getScriptTimeZone();
+          value = Utilities.formatDate(value, timezone, 'dd/MM/yyyy');
+        } else if (typeof value === 'string' && value.includes('T')) {
+          // Nếu là ISO string, parse và format lại
+          try {
+            const date = new Date(value);
+            const timezone = Session.getScriptTimeZone();
+            value = Utilities.formatDate(date, timezone, 'dd/MM/yyyy');
+          } catch (e) {
+            // Giữ nguyên nếu parse lỗi
+          }
+        }
+      }
+      
+      // Giữ nguyên time và các field khác
+      event[header] = value;
     });
     events.push(event);
   }
@@ -144,6 +170,7 @@ function getAllData() {
   // Get events
   const eventSheet = ss.getSheetByName(SHEET_NAMES.EVENTS);
   const eventData = eventSheet.getDataRange().getValues();
+  const eventDisplayData = eventSheet.getDataRange().getDisplayValues(); // Lấy giá trị hiển thị
   const eventHeaders = eventData[0];
   const events = [];
   
@@ -152,7 +179,31 @@ function getAllData() {
     
     const event = {};
     eventHeaders.forEach((header, index) => {
-      event[header] = eventData[i][index];
+      let value = eventData[i][index];
+      
+      // Với date, dùng display value để lấy đúng format hiển thị trong sheet
+      if (header === 'date') {
+        const displayValue = eventDisplayData[i][index];
+        // Nếu display value là format dd/mm/yyyy thì dùng luôn
+        if (displayValue && typeof displayValue === 'string' && displayValue.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/)) {
+          value = displayValue;
+        } else if (value instanceof Date) {
+          // Format date thành dd/mm/yyyy - dùng timezone Asia/Ho_Chi_Minh
+          const timezone = Session.getScriptTimeZone();
+          value = Utilities.formatDate(value, timezone, 'dd/MM/yyyy');
+        } else if (typeof value === 'string' && value.includes('T')) {
+          // Nếu là ISO string, parse và format lại
+          try {
+            const date = new Date(value);
+            const timezone = Session.getScriptTimeZone();
+            value = Utilities.formatDate(date, timezone, 'dd/MM/yyyy');
+          } catch (e) {
+            // Giữ nguyên nếu parse lỗi
+          }
+        }
+      }
+      
+      event[header] = value;
     });
     events.push(event);
   }
@@ -254,4 +305,3 @@ function testGetData() {
   const result = getAllData();
   Logger.log(result.getContent());
 }
-

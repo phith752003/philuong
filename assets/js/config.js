@@ -4,7 +4,7 @@
 
 // QUAN TRỌNG: Thay URL này bằng Web app URL từ Google Apps Script
 // Sau khi deploy Apps Script, copy URL dạng: https://script.google.com/macros/s/.../exec
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHci3dMwP9Z3qnBbZjdXoB19Hq-aNAuGPyZYjZkZvQUwT_8Nk-8Y54SR-9SXBc_nuy/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDbM-5hFS6xUkSI7q7XqhPT3z_YmhZVvhi4FLyke04UKTX5E22_RynmrB2ZfN8KUZT/exec';
 
 // Cấu hình
 const CONFIG = {

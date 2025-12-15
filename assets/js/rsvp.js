@@ -352,6 +352,50 @@
         });
     }
 
+    function handleAutoSelect() {
+        // Kiểm tra URL parameters xem có auto-select guest không
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoSelect = urlParams.get('autoSelect');
+        const guestId = urlParams.get('guestId');
+        
+        if (autoSelect === 'true' && guestId) {
+            console.log('🎯 Auto-selecting guest:', guestId);
+            
+            // Đợi data load xong rồi mới select
+            const checkDataInterval = setInterval(() => {
+                if (state.guests.length > 0) {
+                    clearInterval(checkDataInterval);
+                    
+                    // Tìm guest
+                    const guest = state.guests.find(g => g.id === guestId);
+                    if (guest) {
+                        state.selectedGuestId = guestId;
+                        
+                        // Hiển thị form invitation
+                        renderInvitation(guest);
+                        
+                        // Scroll đến form
+                        setTimeout(() => {
+                            elements.invitationPanel.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'start' 
+                            });
+                        }, 300);
+                        
+                        console.log('✅ Auto-selected guest:', guest.name);
+                    } else {
+                        console.warn('⚠️ Guest not found:', guestId);
+                    }
+                }
+            }, 100);
+            
+            // Timeout sau 5 giây
+            setTimeout(() => {
+                clearInterval(checkDataInterval);
+            }, 5000);
+        }
+    }
+
     function init() {
         if (!elements.form) {
             return;
@@ -361,6 +405,9 @@
         elements.resultsContainer.addEventListener('change', handleGuestSelection);
         elements.viewButton.addEventListener('click', handleViewInvitation);
         elements.confirmationForm.addEventListener('submit', handleConfirmation);
+        
+        // Xử lý auto-select từ thiệp mời
+        handleAutoSelect();
     }
 
     init();

@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" type="image/x-icon" href="common/imgs/icon.gif">
     <!-- Load config trước -->
     <script src="assets/js/config.js?v=20251212"></script>
     <style>
@@ -1112,6 +1113,28 @@
         if (elements.confirmationForm) {
             elements.confirmationForm.addEventListener('submit', handleConfirmation);
         }
+    </script>
+    <video id="videoId" src="common/imgs/fav.mp4" preload="auto" muted loop playsinline style="display:none"></video>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/favico.js/0.3.10/favico.min.js" integrity="sha512-YcGQ21MCH2RKDWE/YBYtqlIS3pMdn1Z32OvwE9JOi6Qd6hw2yffA9H9n1tFoZT3zh0+BTtPlqvGjufH6G+j6lA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        (function() {
+            var video = document.getElementById('videoId');
+            try {
+                var favicon = new Favico({ animation: 'none' });
+                if (video) {
+                    video.play().then(function() {
+                        favicon.video(video);
+                    }).catch(function() {
+                        favicon.image('common/imgs/fav.ico');
+                    });
+                } else {
+                    favicon.image('common/imgs/fav.ico');
+                }
+            } catch (e) {
+                var link = document.querySelector('link[rel*="icon"]');
+                if (link) link.href = 'common/imgs/fav.ico';
+            }
+        })();
     </script>
 </body>
 </html>
